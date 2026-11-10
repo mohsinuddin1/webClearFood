@@ -1,0 +1,54 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import { foods } from '../../data/foods';
+---
+
+<Layout
+  title="Food scores: which foods are good or bad for your skin? | Clear Food"
+  description="Milk, whey, energy drinks, fries, Nutella and more, scored from 1 to 100 by the Clear Food app for clear skin, body fat, muscle and bloating."
+  isSubpage={true}
+>
+  <a class="skip" href="#main">Skip to content</a>
+  <Header isSubpage={true} />
+
+  <main id="main" class="food-page">
+    <nav class="crumbs" aria-label="Breadcrumb">
+      <a href="/">Home</a> &rsaquo; <span>Food scores</span>
+    </nav>
+    <h1>Which foods are good or bad for your skin?</h1>
+    <p class="fp-answer">
+      We ran the foods people ask about most through the Clear Food scan, with the same four goals as in the app. Tap a food to see why it scores the way it does.
+    </p>
+
+    <ol class="hub-list">
+      {foods.map((food) => (
+        <li>
+          <a href={`/foods/${food.slug}`}>
+            <span
+              class="score-ring"
+              style={`--score:${food.score};--ring:${food.ringColor}`}
+              role="img"
+              aria-label={`Score ${food.score} out of 100`}
+            >
+              <svg viewBox="0 0 64 64" aria-hidden="true">
+                <circle class="ring-track" cx="32" cy="32" r="27" pathLength="100"></circle>
+                <circle class="ring-fill" cx="32" cy="32" r="27" pathLength="100"></circle>
+              </svg>
+              <b>{food.score}</b>
+            </span>
+            <span>
+              <strong>{food.name}</strong>
+              <em>{food.h1}</em>
+            </span>
+            <i aria-hidden="true">&rarr;</i>
+          </a>
+        </li>
+      ))}
+    </ol>
+    <p class="fp-note">Not medical advice.</p>
+  </main>
+
+  <Footer />
+</Layout>

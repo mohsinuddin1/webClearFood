@@ -1,0 +1,57 @@
+---
+interface Props {
+  title?: string;
+  description?: string;
+  isSubpage?: boolean;
+  ogImage?: string;
+}
+
+const {
+  title = "Clear Food – Food Scanner App for Clearer Skin & Less Bloating",
+  description = "Take a photo of any meal and Clear Food scores it from 1 to 100 for your goals: clear skin, less bloat, muscle and body fat. Available on iPhone now.",
+  isSubpage = false,
+  ogImage = "https://www.clearfood.app/assets/og.jpg"
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>{title}</title>
+  <meta name="description" content={description} />
+  <link rel="canonical" href={Astro.url.href} />
+  <meta name="robots" content="index, follow, max-image-preview:large" />
+  <meta name="theme-color" content="#4e5d75" />
+  <meta name="apple-itunes-app" content="app-id=6779364653" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Clear Food" />
+  <meta property="og:url" content={Astro.url.href} />
+  <meta property="og:title" content={title} />
+  <meta property="og:description" content={description} />
+  <meta property="og:image" content={ogImage} />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:locale" content="en_US" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="icon" type="image/png" href="/assets/favicon.png" />
+  <link rel="apple-touch-icon" href="/assets/icon-180.png" />
+  {!isSubpage && (
+    <link
+      rel="preload"
+      as="image"
+      href="/assets/bowl.webp"
+      imagesrcset="/assets/bowl-480.webp 480w, /assets/bowl.webp 731w"
+      imagesizes="(max-width: 760px) 340px, 560px"
+      fetchpriority="high"
+    />
+  )}
+  <link rel="stylesheet" href="/oasis.css" />
+  <script src="/app.js" defer></script>
+  <script src="/script.js" defer></script>
+</head>
+<body class={isSubpage ? "subpage" : ""}>
+  <slot />
+</body>
+</html>

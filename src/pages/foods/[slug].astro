@@ -1,0 +1,152 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import { foods, type FoodItem } from '../../data/foods';
+
+export function getStaticPaths() {
+  return foods.map((food) => ({
+    params: { slug: food.slug },
+    props: { food }
+  }));
+}
+
+interface Props {
+  food: FoodItem;
+}
+
+const { food } = Astro.props;
+const otherFoods = foods.filter((f) => f.slug !== food.slug);
+---
+
+<Layout
+  title={food.title}
+  description={food.answer.slice(0, 160)}
+  isSubpage={true}
+>
+  <a class="skip" href="#main">Skip to content</a>
+  <Header isSubpage={true} />
+
+  <main id="main" class="food-page">
+    <nav class="crumbs" aria-label="Breadcrumb">
+      <a href="/">Home</a> &rsaquo; <a href="/foods">Food scores</a> &rsaquo; <span>{food.name}</span>
+    </nav>
+
+    <h1>{food.h1}</h1>
+    <p class="fp-answer">{food.answer}</p>
+
+    <section class="fp-card" aria-label={food.name}>
+      <div class="fp-card-top">
+        <div>
+          <strong>{food.name}</strong>
+          <span>{food.serving}</span>
+        </div>
+        <span
+          class="score-ring"
+          style={`--score:${food.score};--ring:${food.ringColor}`}
+          role="img"
+          aria-label={`Score ${food.score} out of 100`}
+        >
+          <svg viewBox="0 0 64 64" aria-hidden="true">
+            <circle class="ring-track" cx="32" cy="32" r="27" pathLength="100"></circle>
+            <circle class="ring-fill" cx="32" cy="32" r="27" pathLength="100"></circle>
+          </svg>
+          <b>{food.score}</b>
+        </span>
+      </div>
+
+      <ul class="goal-bars">
+        {food.goals.map((g) => (
+          <li style={`--score:${g.score};--bar:${g.color}`}>
+            <span>{g.name}</span>
+            <i aria-hidden="true">
+              {Array.from({ length: 20 }).map((_, i) => (
+                <span style={`--i:${i}`}></span>
+              ))}
+            </i>
+            <em>{g.score}</em>
+          </li>
+        ))}
+      </ul>
+      <p class="fp-macros">{food.macros}</p>
+    </section>
+
+    <div class="fp-proscons">
+      {food.pros.length > 0 && (
+        <section>
+          <h2>What the scan likes</h2>
+          <ul>
+            {food.pros.map((p) => <li>{p}</li>)}
+          </ul>
+        </section>
+      )}
+      {food.cons.length > 0 && (
+        <section>
+          <h2>What pulls the score down</h2>
+          <ul>
+            {food.cons.map((c) => <li>{c}</li>)}
+          </ul>
+        </section>
+      )}
+    </div>
+
+    {food.sources.length > 0 && (
+      <section class="fp-sources">
+        <h2>Sources</h2>
+        <ul>
+          {food.sources.map((s) => (
+            <li>
+              <a href={s.url} target="_blank" rel="noopener">{s.title}</a>
+              <span>{s.org}</span>
+            </li>
+          ))}
+        </ul>
+      </section>
+    )}
+
+    <section class="fp-cta">
+      <h2>Scan your own food</h2>
+      <p>Take a photo of any meal and get the same score, goals and macros in a few seconds.</p>
+      <div class="store-actions">
+        <a
+          class="store-button ios"
+          href="https://apps.apple.com/app/clear-food-glowup-your-skin/id6779364653"
+          target="_blank"
+          rel="noopener"
+        >
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M17.1 12.3c0-2.2 1.8-3.3 1.9-3.4-1-1.5-2.6-1.7-3.2-1.7-1.4-.2-2.7.8-3.4.8-.7 0-1.8-.8-3-.8-1.6 0-3 .9-3.8 2.3-1.6 2.8-.4 7 1.2 9.3.8 1.1 1.7 2.3 2.9 2.2 1.2 0 1.6-.7 3.1-.7s1.9.7 3.1.7c1.3 0 2.1-1.1 2.8-2.2.9-1.3 1.3-2.5 1.3-2.6-.1 0-2.9-1.1-2.9-3.9M15 5.7c.6-.8 1.1-1.9 1-3-.9 0-2.1.6-2.8 1.4-.6.7-1.2 1.8-1 2.9 1 .1 2.1-.5 2.8-1.3"></path>
+          </svg>
+          <span><small>AVAILABLE ON iOS</small>Get the app</span>
+        </a>
+      </div>
+    </section>
+
+    <section class="fp-more">
+      <h2>More food scores</h2>
+      <div class="food-chips">
+        {otherFoods.map((f) => (
+          <a class="food-chip" href={`/foods/${f.slug}`}>
+            <span
+              class="score-ring"
+              style={`--score:${f.score};--ring:${f.ringColor}`}
+              role="img"
+              aria-label={`Score ${f.score} out of 100`}
+            >
+              <svg viewBox="0 0 64 64" aria-hidden="true">
+                <circle class="ring-track" cx="32" cy="32" r="27" pathLength="100"></circle>
+                <circle class="ring-fill" cx="32" cy="32" r="27" pathLength="100"></circle>
+              </svg>
+              <b>{f.score}</b>
+            </span>
+            <span>{f.name}</span>
+          </a>
+        ))}
+      </div>
+    </section>
+
+    <p class="fp-note">Scanned with the Clear Food app. Values are estimates. Not medical advice.</p>
+  </main>
+
+  <Footer />
+</Layout>

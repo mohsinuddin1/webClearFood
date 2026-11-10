@@ -1,0 +1,48 @@
+---
+interface Props {
+  isSubpage?: boolean;
+}
+
+const { isSubpage = false } = Astro.props;
+const prefix = isSubpage ? "/" : "";
+---
+
+<header class="nav-wrap">
+  <nav class="nav" aria-label="Main">
+    <a class="brand" href="/" aria-label="Clear Food">
+      <img src="/assets/clearfood-icon.png" alt="" width="30" height="30" />
+      <span>Clear Food</span>
+    </a>
+    <div class="nav-links">
+      <a href={`${prefix}#scan`}>The scan</a>
+      <a href="/foods">Food scores</a>
+      <a href={`${prefix}#reviews`}>Reviews</a>
+      <a href={`${prefix}#faq`}>FAQ</a>
+    </div>
+    <a
+      class="nav-cta"
+      href="https://apps.apple.com/app/clear-food-glowup-your-skin/id6779364653"
+      target="_blank"
+      rel="noopener"
+    >
+      Get the app
+    </a>
+    <button class="menu-toggle" aria-label="Menu" aria-expanded="false" aria-controls="mobile-menu">
+      <span></span>
+      <span></span>
+    </button>
+  </nav>
+  <div id="mobile-menu" hidden>
+    <a href={`${prefix}#scan`}>The scan</a>
+    <a href="/foods">Food scores</a>
+    <a href={`${prefix}#reviews`}>Reviews</a>
+    <a href={`${prefix}#faq`}>FAQ</a>
+    <a
+      href="https://apps.apple.com/app/clear-food-glowup-your-skin/id6779364653"
+      target="_blank"
+      rel="noopener"
+    >
+      Get the app on iPhone
+    </a>
+  </div>
+</header>
