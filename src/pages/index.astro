@@ -3,6 +3,7 @@ import Layout from '../layouts/Layout.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import { reviews } from '../data/reviews';
+import { APP_STORE_URL } from '../config';
 ---
 
 <Layout
@@ -30,9 +31,7 @@ import { reviews } from '../data/reviews';
           <a
             class="store-button ios"
             data-hold-link
-            href="https://apps.apple.com/app/clear-food-glowup-your-skin/id6779364653"
-            target="_blank"
-            rel="noopener"
+            href={APP_STORE_URL}
           >
             <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
               <path d="M17.1 12.3c0-2.2 1.8-3.3 1.9-3.4-1-1.5-2.6-1.7-3.2-1.7-1.4-.2-2.7.8-3.4.8-.7 0-1.8-.8-3-.8-1.6 0-3 .9-3.8 2.3-1.6 2.8-.4 7 1.2 9.3.8 1.1 1.7 2.3 2.9 2.2 1.2 0 1.6-.7 3.1-.7s1.9.7 3.1.7c1.3 0 2.1-1.1 2.8-2.2.9-1.3 1.3-2.5 1.3-2.6-.1 0-2.9-1.1-2.9-3.9M15 5.7c.6-.8 1.1-1.9 1-3-.9 0-2.1.6-2.8 1.4-.6.7-1.2 1.8-1 2.9 1 .1 2.1-.5 2.8-1.3"></path>
@@ -141,14 +140,6 @@ import { reviews } from '../data/reviews';
           </figure>
         ))}
       </div>
-      <a
-        class="reviews-link"
-        href="https://apps.apple.com/app/clear-food-glowup-your-skin/id6779364653"
-        target="_blank"
-        rel="noopener"
-      >
-        Read all reviews on the App Store &nearr;
-      </a>
     </section>
 
     <section class="faq section" id="faq" aria-labelledby="faq-title">
@@ -192,4 +183,3 @@ import { reviews } from '../data/reviews';
 
   <Footer />
 </Layout>
-

@@ -1,4 +1,6 @@
 ---
+import { APP_STORE_URL } from '../config';
+
 interface Props {
   isSubpage?: boolean;
 }
@@ -21,9 +23,7 @@ const prefix = isSubpage ? "/" : "";
     </div>
     <a
       class="nav-cta"
-      href="https://apps.apple.com/app/clear-food-glowup-your-skin/id6779364653"
-      target="_blank"
-      rel="noopener"
+      href={APP_STORE_URL}
     >
       Get the app
     </a>
@@ -37,13 +37,8 @@ const prefix = isSubpage ? "/" : "";
     <a href="/foods">Food scores</a>
     <a href={`${prefix}#reviews`}>Reviews</a>
     <a href={`${prefix}#faq`}>FAQ</a>
-    <a
-      href="https://apps.apple.com/app/clear-food-glowup-your-skin/id6779364653"
-      target="_blank"
-      rel="noopener"
-    >
+    <a href={APP_STORE_URL}>
       Get the app on iPhone
     </a>
   </div>
 </header>
-
